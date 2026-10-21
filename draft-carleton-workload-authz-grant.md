@@ -40,7 +40,10 @@ author:
     email: bcampbell@pingidentity.com
 
 normative:
+  RFC2046:
   RFC6749:
+  RFC6838:
+  RFC7515:
   RFC7517:
   RFC7519:
   RFC7521:
@@ -61,6 +64,9 @@ normative:
 
 informative:
   RFC7591:
+  RFC8693:
+  IANA.media-types:
+  IANA.oauth-parameters:
   RFC7523BIS: I-D.ietf-oauth-rfc7523bis
   IDJAG: I-D.ietf-oauth-identity-assertion-authz-grant
 
@@ -164,7 +170,13 @@ An Agent obtains an access token by presenting a JWT as an authorization grant p
 
 Assertions SHOULD be short-lived.  The Authorization Server MUST NOT issue refresh tokens for this grant and SHOULD NOT issue access tokens that outlive the assertion by a significant period ({{RFC7521, Section 4.1}}).
 
+Where a token type identifier is needed for a Workload Authorization Grant, the value `urn:ietf:params:oauth:token-type:wag` ({{iana-uri}}) is used; for example, a Workload Identity Provider that issues Workload Authorization Grants by token exchange {{RFC8693}} would use it as `requested_token_type` and `issued_token_type`.  How an Agent obtains a Workload Authorization Grant is otherwise out of scope.
+
 ## JWT Syntax {#authorization-grant-claims}
+
+The `typ` JOSE Header Parameter ({{RFC7515, Section 4.1.9}}) of the JWT MUST be `oauth-wag+jwt` ({{iana-media-type}}), as recommended by {{RFC8725, Section 3.11}}.  A Workload Identity Provider MUST NOT use this type for any other kind of JWT.
+
+The JWT Claims Set contains:
 
 `iss`
 : REQUIRED - The issuer identifier of the Workload Identity Provider ({{issuer-keys}}): a URL using the `https` scheme with no query or fragment component, as for `issuer` in {{RFC8414, Section 2}}.
@@ -184,7 +196,15 @@ Assertions SHOULD be short-lived.  The Authorization Server MUST NOT issue refre
 
 The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent. An Authorization Server that publishes metadata {{RFC8414}} SHOULD list the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type in `grant_types_supported`.
 
+The following is a non-normative example of a JWT header and claims set:
+
 ```
+{
+  "typ": "oauth-wag+jwt",
+  "alg": "ES256",
+  "kid": "Oct 21"
+}
+.
 {
   "iss": "https://acme.agents.platform.example",
   "sub": "agent/7f3d9as3",
@@ -205,7 +225,7 @@ As part of a Workload Identity Provider registration, the Authorization Server n
 
 A Workload Identity Provider may provide its public key via: a JWK Set {{RFC7517}} entered directly, a JWK Set URL the Authorization Server fetches over HTTPS {{RFC9525}}, or the `jwks_uri` in metadata the issuer publishes under its issuer identifier ({{RFC8414, Section 3}} or {{OIDC-DISCOVERY}}).  An Authorization Server that uses issuer metadata MUST NOT use a document whose `issuer` value is not identical to the registration's issuer identifier ({{RFC8414, Section 3.3}}).  A Workload Identity Provider SHOULD publish its keys at a URL, so that keys can rotate without administrator action.
 
-On each assertion the Authorization Server finds the Workload Identity Provider registration the assertion matches: `iss` equals the registration's issuer identifier by Simple String Comparison ({{RFC7523, Section 3}}) and, where the registration names a claim ({{tenants}}), the assertion carries that claim with the registered value.  An Authorization Server MUST ensure that an assertion can match at most one of its registrations.  The Authorization Server MUST reject an assertion that matches no registration, MUST verify the signature only under a key configured or retrieved for the matched registration's issuer identifier - never under key material or key locations carried in the assertion ({{RFC8725, Section 3.8}} and {{RFC8725, Section 3.10}}) - and MUST interpret `sub` and `jti` only within the scope of the matched registration.
+On each assertion the Authorization Server finds the Workload Identity Provider registration the assertion matches: `iss` equals the registration's issuer identifier by Simple String Comparison ({{RFC7523, Section 3}}) and, where the registration names a claim ({{tenants}}), the assertion carries that claim with the registered value.  An Authorization Server MUST ensure that an assertion can match at most one of its registrations.  The Authorization Server MUST reject an assertion whose `typ` header is not `oauth-wag+jwt` ({{authorization-grant-claims}}), comparing as described in {{RFC7515, Section 4.1.9}}, MUST reject an assertion that matches no registration, MUST verify the signature only under a key configured or retrieved for the matched registration's issuer identifier - never under key material or key locations carried in the assertion ({{RFC8725, Section 3.8}} and {{RFC8725, Section 3.10}}) - and MUST interpret `sub` and `jti` only within the scope of the matched registration.
 
 ## Permissions {#properties}
 During Workload Identity Provider registration, the Authorization Server sets local policy for what permissions to assign an access token given in return for a WAG.  This policy MAY involve consulting claims the Workload Identity Provider asserts about the Agent in the WAG. A claim is an assertion by the Workload Identity Provider, meaningful only within the context of that Workload Identity Provider, and an Authorization Server MUST NOT assume that a similarly named value from another Workload Identity Provider means the same thing.
@@ -232,7 +252,6 @@ When a token request fails, the Authorization Server SHOULD indicate in `error_d
 
 * Agent ownership: see issue #13.
 * Proof of possession: the grant is a bearer assertion and no client authentication is required; whether to name a hardening (sender-constrained access tokens, authenticating the presenting instance, or the Platform authenticating as a client) and which, if any, to require.
-* JWT type: whether to define an explicit `typ` for this grant ({{RFC8725, Section 3.11}}), so that another kind of JWT signed by the same issuer for the same audience cannot be taken for it.
 * Replay: whether an Authorization Server is required to reject a `jti` it has already accepted while the assertion is still valid, or whether that stays optional as in {{RFC7523, Section 3}}.
 
 # Security Considerations {#security-considerations}
@@ -245,11 +264,21 @@ This revision lists the considerations it is aware of; a fuller treatment will f
 * Workload Identity Providers under a shared issuer identifier share its keys, so the claim that tells them apart ({{tenants}}) is only as trustworthy as the party signing for all of them, and a Workload Identity Provider registration for a shared issuer identifier that names no claim trusts every Workload Identity Provider under it.
 * Where one Authorization Server serves several organizations, a Workload Identity Provider registration created by the wrong organization routes another organization's Agents to it; who may register a given Workload Identity Provider is out of scope.
 * Error responses ({{errors}}) tell any presenter which Workload Identity Providers an Authorization Server trusts, and `error_uri` hands a link to an unauthenticated presenter.
-* This document defines no explicit JWT type, so an issuer that signs other kinds of JWT for the same audience risks one being taken for this grant ({{RFC8725, Section 3.11}}).
 
 # IANA Considerations
 
-This document has no IANA actions.
+## Media Types {#iana-media-type}
+
+This section registers `oauth-wag+jwt`, a new media type {{RFC2046}} in the "Media Types" registry {{IANA.media-types}} in the manner described in {{RFC6838}}.  It can be used to indicate that the content is a Workload Authorization Grant.
+
+## OAuth URI Registration {#iana-uri}
+
+This section registers `urn:ietf:params:oauth:token-type:wag` in the "OAuth URI" subregistry of the "OAuth Parameters" registry {{IANA.oauth-parameters}}.
+
+* URN: urn:ietf:params:oauth:token-type:wag
+* Common Name: Token type URI for a Workload Authorization Grant
+* Change Controller: IETF
+* Specification Document: This document
 
 --- back
 
