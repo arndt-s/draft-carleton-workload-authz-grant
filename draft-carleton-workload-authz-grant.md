@@ -181,8 +181,8 @@ Assertions SHOULD be short-lived.  The Authorization Server MUST NOT issue refre
 `scope`
 : OPTIONAL - A space-separated list of scopes ({{RFC6749, Section 3.3}}) the Workload Identity Provider asserts for this request, as in {{IDJAG, Section 3.1}}.  The Authorization Server decides under its own policy which of them to grant, and MAY grant a subset ({{IDJAG, Section 4.4.1}}).
 
-`name`
-: OPTIONAL - A human-readable name for the Agent, for display only and never an input to authorization ({{security-considerations}}).  Issuers SHOULD limit `name` to 64 characters; recipients MAY truncate it for display or ignore it.
+`nickname`
+: OPTIONAL - A human-readable nickname for the Agent, for display only and never an input to authorization ({{security-considerations}}).  Issuers SHOULD limit `nickname` to 64 characters; recipients MAY truncate it for display or ignore it.
 
 
 The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent. An Authorization Server that publishes metadata {{RFC8414}} SHOULD list the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type in `grant_types_supported`.
@@ -191,7 +191,7 @@ The assertion is signed under a key configured from the Workload Identity Provid
 {
   "iss": "https://acme.agents.platform.example",
   "sub": "agent/7f3d9as3",
-  "name": "Invoice triage",
+  "nickname": "Invoice triage",
   "aud": "https://as.saas.example",
   "exp": 1785271980,
   "iat": 1785271680,
@@ -212,7 +212,7 @@ A Workload Identity Provider may provide its public key via: a JWK Set {{RFC7517
 On each assertion the Authorization Server finds the Workload Identity Provider registration the assertion matches: `iss` equals the registration's issuer identifier by Simple String Comparison ({{RFC7523, Section 3}}) and, where the registration names a claim ({{tenants}}), the assertion carries that claim with the registered value.  An Authorization Server MUST ensure that an assertion can match at most one of its registrations.  The Authorization Server MUST reject an assertion that matches no registration, MUST verify the signature only under a key configured or retrieved for the matched registration's issuer identifier - never under key material or key locations carried in the assertion ({{RFC8725, Section 3.8}} and {{RFC8725, Section 3.10}}) - and MUST interpret `sub` and `jti` only within the scope of the matched registration.
 
 ## Permissions {#properties}
-During Workload Identity Provider registration, the Authorization Server sets local policy for what permissions to assign an access token given in return for a WAG.  This policy MAY involve consulting claims, other than `name`, that the Workload Identity Provider asserts about the Agent in the WAG. A claim is an assertion by the Workload Identity Provider, meaningful only within the context of that Workload Identity Provider, and an Authorization Server MUST NOT assume that a similarly named value from another Workload Identity Provider means the same thing.
+During Workload Identity Provider registration, the Authorization Server sets local policy for what permissions to assign an access token given in return for a WAG.  This policy MAY involve consulting claims, other than `nickname`, that the Workload Identity Provider asserts about the Agent in the WAG. A claim is an assertion by the Workload Identity Provider, meaningful only within the context of that Workload Identity Provider, and an Authorization Server MUST NOT assume that a similarly named value from another Workload Identity Provider means the same thing.
 
 The specific claims a Workload Identity Provider provides, and what permissions an Authorization Server decides to grant are outside the scope of this document.
 
@@ -248,7 +248,7 @@ This revision lists the considerations it is aware of; a fuller treatment will f
 * Keys are held per issuer identifier, so that one issuer's key never verifies another's assertion ({{issuer-keys}}); whoever controls an issuer identifier, or the DNS name under it, controls what every trusting Authorization Server accepts.
 * Workload Identity Providers under a shared issuer identifier share its keys, so the claim that tells them apart ({{tenants}}) is only as trustworthy as the party signing for all of them, and a Workload Identity Provider registration for a shared issuer identifier that names no claim trusts every Workload Identity Provider under it.
 * Where one Authorization Server serves several organizations, a Workload Identity Provider registration created by the wrong organization routes another organization's Agents to it; who may register a given Workload Identity Provider is out of scope.
-* The `name` claim is free text set at the Platform: it is not unique, can change, and can imitate another Agent or a person, including with visually similar characters.  It MUST NOT be used in an authorization decision or as an identifier, by the Authorization Server or by any party it passes the name to; {{identity-model}} says what identifies an Agent.
+* The `nickname` claim is free text set at the Platform: it is not unique, can change, and can imitate another Agent or a person, including with visually similar characters.  It MUST NOT be used in an authorization decision or as an identifier, by the Authorization Server or by any party it passes the name to; {{identity-model}} says what identifies an Agent.
 * Error responses ({{errors}}) tell any presenter which Workload Identity Providers an Authorization Server trusts, and `error_uri` hands a link to an unauthenticated presenter.
 * This document defines no explicit JWT type, so an issuer that signs other kinds of JWT for the same audience risks one being taken for this grant ({{RFC8725, Section 3.11}}).
 
