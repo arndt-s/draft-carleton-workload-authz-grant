@@ -321,12 +321,3 @@ agent-as-actor; hardened tier = O1 row 3); or a per-agent client
 "upgrade" reserved for user-granted personal resources (cost: the same
 agent appears as client_id in one flow and sub in others). See
 notes/oauth-slots.md.
-
-### O5 — Optional `name` claim, for display only (proposed 2026-10-23, issue #2)
-`sub` is opaque and the Authorization Server has no way to call back for a
-name, so the grant MAY carry `name`, reused as in O2 option (a). It is the one
-exception to fixing no claims about the Agent, because it carries no
-authority: it MUST NOT be used for authorization or as an identifier.
-A SHOULD of 64 characters lets applications lay out a UI. Considered: no
-claim; a new claim such as `display_name`; character set rules such as PRECIS
-(left out: the value is never compared).
