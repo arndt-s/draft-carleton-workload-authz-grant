@@ -5,6 +5,22 @@ Most recent first within each state. Open items are at the bottom.
 
 ## Decided
 
+### D16 — WAG is explicitly typed (`oauth-wag+jwt`) and has a token-type URI (2026-10-21)
+The JWT header `typ` of a WAG MUST be `oauth-wag+jwt`, and the Authorization
+Server MUST reject an assertion carrying any other type. The draft registers
+the media type `application/oauth-wag+jwt` and the OAuth URI
+`urn:ietf:params:oauth:token-type:wag`. This closes the "JWT type" open issue.
+Rationale: RFC 8725 Section 3.11 recommends explicit typing so that another JWT
+the same issuer signs for the same audience (an ID Token, an ID-JAG) cannot be
+accepted as a WAG. It also mirrors ID-JAG (-04 Sections 3.1, 4.4.1, 10.1,
+10.2), whose role WAG parallels. The token-type URI is not used by the
+jwt-bearer presentation itself. It is registered so that a WIdP issuing WAGs by
+RFC 8693 token exchange has a `requested_token_type`/`issued_token_type` value,
+and it is referenced only informatively. Alternatives: `wag+jwt` (rejected:
+lacks the `oauth-` prefix ID-JAG uses); `workload-authz-grant+jwt` (rejected:
+long, and out of step with ID-JAG); typing without a token-type URI (rejected:
+leaves token-exchange issuance without an identifier).
+
 ### D15 - WIP, see PR description
 
 ### D13 — WAG is a standalone mechanism, not a profile of AIMS (2026-08-31, closes #1)
