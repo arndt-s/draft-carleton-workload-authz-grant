@@ -52,7 +52,6 @@ normative:
   RFC8707:
   RFC8725:
   RFC9525:
-  IDJAG: I-D.ietf-oauth-identity-assertion-authz-grant
   OIDC-DISCOVERY:
     title: OpenID Connect Discovery 1.0 incorporating errata set 2
     target: https://openid.net/specs/openid-connect-discovery-1_0.html
@@ -69,6 +68,7 @@ informative:
   IANA.media-types:
   IANA.oauth-parameters:
   RFC7523BIS: I-D.ietf-oauth-rfc7523bis
+  IDJAG: I-D.ietf-oauth-identity-assertion-authz-grant
 
 --- abstract
 
@@ -256,8 +256,6 @@ When a token request fails, the Authorization Server SHOULD indicate in `error_d
 # Authorization Server Metadata {#as-metadata}
 
 An Authorization Server that publishes metadata {{RFC8414}} SHOULD include the value `urn:ietf:params:oauth:grant-profile:wag` ({{iana-uri}}) in its `authorization_grant_profiles_supported` metadata parameter ({{IDJAG, Section 7.2}}).  An Authorization Server that includes this value MUST also include `urn:ietf:params:oauth:grant-type:jwt-bearer` in `grant_types_supported`.
-
-By including `urn:ietf:params:oauth:grant-profile:wag`, the Authorization Server states that it accepts a Workload Authorization Grant for an Agent it has no prior record of: the Agent needs no registration, provisioning or client registration at the Authorization Server before its first token request, and the Authorization Server does not reject the grant because it has not seen the Agent's `sub` before ({{identity-model}}).  An Authorization Server that accepts Workload Authorization Grants only for Agents provisioned in advance MUST NOT include this value.
 
 The following is a non-normative example of Authorization Server metadata advertising support for this specification:
 
