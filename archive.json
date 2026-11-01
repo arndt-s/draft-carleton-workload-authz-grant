@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-27T04:14:37.728511+00:00",
+  "timestamp": "2026-11-01T05:02:00.345236+00:00",
   "repo": "pcarleton/draft-carleton-workload-authz-grant",
   "labels": [
     {
@@ -1799,7 +1799,7 @@
       "labels": [],
       "body": "Follow-up to #12, which dropped the unfinished example from -01.\r\n\r\nAdds the example back as a bulleted list under Permissions, marked non-normative, with the two references it cites (RFC 9068, RFC 7643).",
       "createdAt": "2026-09-22T17:31:37Z",
-      "updatedAt": "2026-09-22T17:32:06Z",
+      "updatedAt": "2026-10-30T16:53:45Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "5569960c75457fef08d35f39e84f31d9ff3d031e",
@@ -1811,7 +1811,34 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVKANrA",
+          "commit": {
+            "abbreviatedOid": "43f4d9b"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T15:39:46Z",
+          "updatedAt": "2026-10-30T15:39:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVK6BLQ",
+          "commit": {
+            "abbreviatedOid": "43f4d9b"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T16:53:45Z",
+          "updatedAt": "2026-10-30T16:53:45Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 17,
@@ -1984,13 +2011,13 @@
       "labels": [],
       "body": "Add grant-profile URN for WAG and talk about its usage.",
       "createdAt": "2026-10-26T10:40:41Z",
-      "updatedAt": "2026-10-26T10:47:26Z",
+      "updatedAt": "2026-10-30T21:39:22Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "493e045a666d3b4bb18b8fa3c772087400729cc7",
       "headRepository": "arndt-s/draft-carleton-workload-authz-grant",
       "headRefName": "arndt/advertised-support",
-      "headRefOid": "1d914e55986b50114bae45374d696521d9740edb",
+      "headRefOid": "8a598d76722b4d4c6a2a8a02bc939f8527add20d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2036,6 +2063,152 @@
               "updatedAt": "2026-10-26T10:47:26Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVKEu0g",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T15:45:33Z",
+          "updatedAt": "2026-10-30T15:45:33Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Wording could be improved",
+              "createdAt": "2026-10-30T15:45:33Z",
+              "updatedAt": "2026-10-30T15:45:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVKFsOg",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T15:46:44Z",
+          "updatedAt": "2026-10-30T15:46:44Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Brian is saying keeping it informative",
+              "createdAt": "2026-10-30T15:46:44Z",
+              "updatedAt": "2026-10-30T15:46:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVKJtHA",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T15:51:53Z",
+          "updatedAt": "2026-10-30T15:51:54Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Discussed to remove it.",
+              "createdAt": "2026-10-30T15:51:53Z",
+              "updatedAt": "2026-10-30T15:51:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVKMPlg",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T15:55:17Z",
+          "updatedAt": "2026-10-30T15:55:17Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "\"I've made my peace with the text\" - @arndt-s \n```suggestion\n```",
+              "createdAt": "2026-10-30T15:55:17Z",
+              "updatedAt": "2026-10-30T15:55:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVLVGmw",
+          "commit": {
+            "abbreviatedOid": "8a598d7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T17:29:24Z",
+          "updatedAt": "2026-10-30T17:29:24Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "\ud83d\ude22",
+              "createdAt": "2026-10-30T17:29:24Z",
+              "updatedAt": "2026-10-30T17:29:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVLVktQ",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-30T17:29:59Z",
+          "updatedAt": "2026-10-30T17:29:59Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "@nicksteele-oai ok to keep this out of this PR? It's not related as far as I can see it.",
+              "createdAt": "2026-10-30T17:29:59Z",
+              "updatedAt": "2026-10-30T17:29:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVLczZw",
+          "commit": {
+            "abbreviatedOid": "8a598d7"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T17:39:22Z",
+          "updatedAt": "2026-10-30T17:39:22Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVOBAcg",
+          "commit": {
+            "abbreviatedOid": "1d914e5"
+          },
+          "author": "nicksteele-oai",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-10-30T21:39:22Z",
+          "updatedAt": "2026-10-30T21:39:22Z",
+          "comments": []
         }
       ]
     },
