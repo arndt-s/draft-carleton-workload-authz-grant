@@ -253,7 +253,7 @@ This example is non-normative.  It illustrates one shape the permission decision
 * A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token carrying the permissions mapped there, without further registration.
 * A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token carrying the mapped permissions without further registration.
 
-For this example the `roles`, `groups` and `entitlements` claim names were taken from {{RFC9068, Section 2.2.3.1}}, which take them from the SCIM core schema ({{RFC7643, Section 4.1.2}}), however the claim names are used for illustrative purposes only. Inclusion of those claims is optional and Workload Identity Providers may define specific claims, depending on their deployment, supported access control models and ecosystem.
+The claim names are used for illustrative purposes only. Inclusion of such claims is optional, and Workload Identity Providers may define specific claims depending on their deployment, supported access control models and ecosystem.
 
 ## Multi-Tenancy {#tenants}
 
