@@ -5,6 +5,25 @@ Most recent first within each state. Open items are at the bottom.
 
 ## Decided
 
+### D17 — AS advertises WAG support via `authorization_grant_profiles_supported` (2026-10-26)
+An Authorization Server that publishes RFC 8414 metadata SHOULD list
+`urn:ietf:params:oauth:grant-profile:wag` in
+`authorization_grant_profiles_supported` (ID-JAG -04 Section 7.2), and then
+MUST also list jwt-bearer in `grant_types_supported`. The value states that
+the AS accepts a WAG for an Agent it has no prior record of; an AS that
+accepts assertions only for pre-provisioned Agents MUST NOT list it. The draft
+registers the grant-profile URN; the metadata parameter itself is ID-JAG's.
+Rationale: listing jwt-bearer in `grant_types_supported` (the -01 text) does
+not distinguish WAG from any other RFC 7523 profile, and "no per-Agent
+provisioning" is the property a Platform needs to know before it presents an
+unseen Agent. Cost: IDJAG moves from the informative to the normative
+references, a narrow dependence (one metadata name) that D13 otherwise avoids.
+Alternatives: a WAG-only metadata parameter (rejected: splits discovery of
+assertion-grant profiles that ID-JAG already unifies); reusing
+`urn:ietf:params:oauth:token-type:wag` as the value (rejected: ID-JAG keeps
+token-type and grant-profile URNs separate); no advertisement (rejected:
+support is then only discoverable by trying).
+
 ### D16 — WAG is explicitly typed (`oauth-wag+jwt`) and has a token-type URI (2026-10-21)
 The JWT header `typ` of a WAG MUST be `oauth-wag+jwt`, and the Authorization
 Server MUST reject an assertion carrying any other type. The draft registers

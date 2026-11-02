@@ -197,7 +197,8 @@ The JWT Claims Set contains:
 : OPTIONAL - A human-readable nickname for the Agent, for display only and never an input to authorization ({{security-considerations}}).  Issuers SHOULD limit `nickname` to 64 characters; recipients MAY truncate it for display or ignore it.
 
 
-The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent. An Authorization Server that publishes metadata {{RFC8414}} SHOULD list the `urn:ietf:params:oauth:grant-type:jwt-bearer` grant type in `grant_types_supported`.
+The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent.
+See {{as-metadata}} for details on how an Authorization Server advertises support for this grant.
 
 The following is a non-normative example of a JWT header and claims set:
 
@@ -252,6 +253,26 @@ How an Authorization Server determines whether a Workload Identity Provider need
 When a token request fails, the Authorization Server SHOULD indicate in `error_description` ({{RFC6749, Section 5.2}}) who must act: an administrator of the Authorization Server, if the Workload Identity Provider is not trusted or the Agent holds no permission for the request; or the Platform, if the assertion is invalid.  An untrusted Workload Identity Provider or an invalid assertion yields `invalid_grant` ({{RFC7523, Section 3.1}}); a missing permission yields `invalid_scope` or `invalid_target` ({{RFC8707}}) where a specific scope or resource is refused, otherwise `invalid_grant`.  When an action can be taken to resolve the issue, the Authorization Server SHOULD include a link in `error_uri`.
 
 
+# Authorization Server Metadata {#as-metadata}
+
+An Authorization Server that publishes metadata {{RFC8414}} SHOULD include the value `urn:ietf:params:oauth:grant-profile:wag` ({{iana-uri}}) in its `authorization_grant_profiles_supported` metadata parameter ({{IDJAG, Section 7.2}}).  An Authorization Server that includes this value MUST also include `urn:ietf:params:oauth:grant-type:jwt-bearer` in `grant_types_supported`.
+
+The following is a non-normative example of Authorization Server metadata advertising support for this specification:
+
+~~~
+{
+  "issuer": "https://as.example.com",
+  "token_endpoint": "https://as.example.com/token",
+  "grant_types_supported": [
+    "urn:ietf:params:oauth:grant-type:jwt-bearer"
+  ],
+  "authorization_grant_profiles_supported": [
+    "urn:ietf:params:oauth:grant-profile:wag"
+  ]
+}
+~~~
+
+
 # Open Issues {#oi}
 
 * Agent ownership: see issue #13.
@@ -284,6 +305,13 @@ This section registers `urn:ietf:params:oauth:token-type:wag` in the "OAuth URI"
 * Common Name: Token type URI for a Workload Authorization Grant
 * Change Controller: IETF
 * Specification Document: This document
+
+This section registers `urn:ietf:params:oauth:grant-profile:wag` in the "OAuth URI" subregistry of the "OAuth Parameters" registry {{IANA.oauth-parameters}}, for use in the `authorization_grant_profiles_supported` metadata parameter ({{as-metadata}}).
+
+* URN: urn:ietf:params:oauth:grant-profile:wag
+* Common Name: Authorization grant profile identifier for a Workload Authorization Grant
+* Change Controller: IETF
+* Specification Document: {{as-metadata}} of this document
 
 --- back
 
