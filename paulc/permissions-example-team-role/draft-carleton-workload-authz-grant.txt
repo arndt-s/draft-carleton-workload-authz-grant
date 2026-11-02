@@ -388,33 +388,36 @@ Table of Contents
    permission decision can take.
 
    *  The Workload Identity Provider is configured to include a claim
-      such as "roles": ["databases-team"] in its assertions.  The role
-      does not make an Agent a member of the databases team; it says the
-      customer wants the Agent to have access similar to that team's.
+      such as "roles": ["databases-team"] in its assertions.
 
    *  An administrator configures the Platform so that members of the
       databases team can create Agents that carry that role.
 
-   *  Each Authorization Server has its own concept of groups and
-      permissions, and its administrator configures what a roles claim
-      containing databases-team corresponds to there.
+   *  Each Authorization Server has its own concept of groups, roles,
+      and permissions, and its administrator configures what access to
+      grant based on a roles claim containing databases-team.
 
    *  At a ticket tracker, the role is mapped to less than the team
       itself has: reading tickets, and writing comments on them, in
       projects associated with the team.
 
    *  At a log service, the role is mapped to exactly the access the
-      team has, which is simpler to set up.
+      team has.
 
-   *  A member of the team creates an Agent.  On its first assertion at
-      either Authorization Server, the Agent receives an access token
-      carrying the permissions mapped there, without further
+   *  A member of the team creates an Agent with a nickname "Migration
+      helper".  On its first assertion at either Authorization Server,
+      the Agent receives an access token carrying the permissions mapped
+      there, without further registration.
+
+   *  A different member of the team creates an Agent with a nickname
+      "Latency optimizer".  On its first assertion it also receives an
+      access token carrying the mapped permissions without further
       registration.
 
    For this example the roles, groups and entitlements claim names were
    taken from [RFC9068], Section 2.2.3.1, which take them from the SCIM
    core schema ([RFC7643], Section 4.1.2), however the claim names are
-   used for illustrative purposes only.  Inclusion of such claims are
+   used for illustrative purposes only.  Inclusion of those claims is
    optional and Workload Identity Providers may define specific claims,
    depending on their deployment, supported access control models and
    ecosystem.
