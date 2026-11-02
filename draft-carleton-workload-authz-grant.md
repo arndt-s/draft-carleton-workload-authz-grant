@@ -64,9 +64,7 @@ normative:
 
 informative:
   RFC7591:
-  RFC7643:
   RFC8693:
-  RFC9068:
   IANA.media-types:
   IANA.oauth-parameters:
   RFC7523BIS: I-D.ietf-oauth-rfc7523bis
