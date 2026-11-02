@@ -5,14 +5,14 @@
 Network Working Group                                   P. Carleton, Ed.
 Internet-Draft                                                 Anthropic
 Intended status: Informational                                 N. Steele
-Expires: 26 April 2027                                            OpenAI
+Expires: 6 May 2027                                               OpenAI
                                                               A. Parecki
                                                                     Okta
                                                       A. Schwenkschuster
                                                         Defakto Security
                                                              B. Campbell
                                                            Ping Identity
-                                                         23 October 2026
+                                                         2 November 2026
 
 
                       Workload Authorization Grant
@@ -78,7 +78,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 April 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -107,14 +107,15 @@ Table of Contents
      6.2.  Permissions
      6.3.  Multi-Tenancy
    7.  Error Responses
-   8.  Open Issues
-   9.  Security Considerations
-   10. IANA Considerations
-     10.1.  Media Types
-     10.2.  OAuth URI Registration
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   8.  Authorization Server Metadata
+   9.  Open Issues
+   10. Security Considerations
+   11. IANA Considerations
+     11.1.  Media Types
+     11.2.  OAuth URI Registration
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -249,7 +250,7 @@ Table of Contents
    Section 4.1).
 
    Where a token type identifier is needed for a Workload Authorization
-   Grant, the value urn:ietf:params:oauth:token-type:wag (Section 10.2)
+   Grant, the value urn:ietf:params:oauth:token-type:wag (Section 11.2)
    is used; for example, a Workload Identity Provider that issues
    Workload Authorization Grants by token exchange [RFC8693] would use
    it as requested_token_type and issued_token_type.  How an Agent
@@ -258,7 +259,7 @@ Table of Contents
 5.1.  JWT Syntax
 
    The typ JOSE Header Parameter ([RFC7515], Section 4.1.9) of the JWT
-   MUST be oauth-wag+jwt (Section 10.1), as recommended by [RFC8725],
+   MUST be oauth-wag+jwt (Section 11.1), as recommended by [RFC8725],
    Section 3.11.  A Workload Identity Provider MUST NOT use this type
    for any other kind of JWT.
 
@@ -286,15 +287,14 @@ Table of Contents
       a subset ([IDJAG], Section 4.4.1).
 
    nickname  OPTIONAL - A human-readable nickname for the Agent, for
-      display only and never an input to authorization (Section 9).
+      display only and never an input to authorization (Section 10).
       Issuers SHOULD limit nickname to 64 characters; recipients MAY
       truncate it for display or ignore it.
 
    The assertion is signed under a key configured from the Workload
    Identity Provider (see Section 6.1) and MAY carry further claims
-   about the Agent.  An Authorization Server that publishes metadata
-   [RFC8414] SHOULD list the urn:ietf:params:oauth:grant-type:jwt-bearer
-   grant type in grant_types_supported.
+   about the Agent.  See Section 8 for details on how an Authorization
+   Server advertises support for this grant.
 
    The following is a non-normative example of a JWT header and claims
    set:
@@ -415,7 +415,30 @@ Table of Contents
    taken to resolve the issue, the Authorization Server SHOULD include a
    link in error_uri.
 
-8.  Open Issues
+8.  Authorization Server Metadata
+
+   An Authorization Server that publishes metadata [RFC8414] SHOULD
+   include the value urn:ietf:params:oauth:grant-profile:wag
+   (Section 11.2) in its authorization_grant_profiles_supported metadata
+   parameter ([IDJAG], Section 7.2).  An Authorization Server that
+   includes this value MUST also include urn:ietf:params:oauth:grant-
+   type:jwt-bearer in grant_types_supported.
+
+   The following is a non-normative example of Authorization Server
+   metadata advertising support for this specification:
+
+   {
+     "issuer": "https://as.example.com",
+     "token_endpoint": "https://as.example.com/token",
+     "grant_types_supported": [
+       "urn:ietf:params:oauth:grant-type:jwt-bearer"
+     ],
+     "authorization_grant_profiles_supported": [
+       "urn:ietf:params:oauth:grant-profile:wag"
+     ]
+   }
+
+9.  Open Issues
 
    *  Agent ownership: see issue #13.
 
@@ -429,7 +452,7 @@ Table of Contents
       jti it has already accepted while the assertion is still valid, or
       whether that stays optional as in [RFC7523], Section 3.
 
-9.  Security Considerations
+10.  Security Considerations
 
    This revision lists the considerations it is aware of; a fuller
    treatment will follow.
@@ -472,16 +495,16 @@ Table of Contents
       Identity Providers an Authorization Server trusts, and error_uri
       hands a link to an unauthenticated presenter.
 
-10.  IANA Considerations
+11.  IANA Considerations
 
-10.1.  Media Types
+11.1.  Media Types
 
    This section registers oauth-wag+jwt, a new media type [RFC2046] in
    the "Media Types" registry [IANA.media-types] in the manner described
    in [RFC6838].  It can be used to indicate that the content is a
    Workload Authorization Grant.
 
-10.2.  OAuth URI Registration
+11.2.  OAuth URI Registration
 
    This section registers urn:ietf:params:oauth:token-type:wag in the
    "OAuth URI" subregistry of the "OAuth Parameters" registry
@@ -495,9 +518,24 @@ Table of Contents
 
    *  Specification Document: This document
 
-11.  References
+   This section registers urn:ietf:params:oauth:grant-profile:wag in the
+   "OAuth URI" subregistry of the "OAuth Parameters" registry
+   [IANA.oauth-parameters], for use in the
+   authorization_grant_profiles_supported metadata parameter
+   (Section 8).
 
-11.1.  Normative References
+   *  URN: urn:ietf:params:oauth:grant-profile:wag
+
+   *  Common Name: Authorization grant profile identifier for a Workload
+      Authorization Grant
+
+   *  Change Controller: IETF
+
+   *  Specification Document: Section 8 of this document
+
+12.  References
+
+12.1.  Normative References
 
    [OIDC-DISCOVERY]
               Sakimura, N., Bradley, J., Jones, M., and E. Jay, "OpenID
@@ -568,7 +606,7 @@ Table of Contents
               RFC 9525, DOI 10.17487/RFC9525, November 2023,
               <https://www.rfc-editor.org/rfc/rfc9525>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [IANA.media-types]
               IANA, "Media Types",
@@ -581,9 +619,9 @@ Table of Contents
    [IDJAG]    Parecki, A., McGuinness, K., and B. Campbell, "Identity
               Assertion JWT Authorization Grant", Work in Progress,
               Internet-Draft, draft-ietf-oauth-identity-assertion-authz-
-              grant-04, 21 May 2026,
+              grant-06, 30 October 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              identity-assertion-authz-grant-04>.
+              identity-assertion-authz-grant-06>.
 
    [RFC7523BIS]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
