@@ -134,28 +134,29 @@ Authorization Server, Resource Server: as in {{RFC6749}}. Where an Authorization
 2. Per Agent: the Platform creates an Agent and assigns it an Agent
    Identifier ({{identity-model}}).  Nothing is sent to the Authorization
    Server or the Resource Server.
-3. Per access: the Agent presents a Workload Authorization Grant in an
-   ordinary OAuth token request.  The Authorization Server matches it to a
+3. Per access: the Agent obtains a Workload Authorization Grant from the
+   Workload Identity Provider and presents it in an ordinary OAuth token
+   request.  The Authorization Server matches it to a
    Workload Identity Provider registration, verifies it under that Workload Identity Provider's
    keys,
    allowing for previously unseen `sub` values,
    and issues an access token under its own policy ({{properties}}).
 
 ~~~
-      Platform                    Authorization               Resource
-      (Workload Identity          Server (AS)                 Server (RS)
-       Provider; Agents)
-            |                          |                          |
-  (1)  [administrator registers the Workload Identity Provider]   |
-            |                          |                          |
-  (2)  [Platform creates Agent; nothing sent to AS or RS]         |
-            |                          |                          |
-  (3)       |--- POST /token --------->|                          |
-            |    grant_type=jwt-bearer |                          |
-            |    assertion=<WAG>       |                          |
-            |    resource=<RS>         |                          |
-            |<-- access token ---------|                          |
-            |--- request + access token ------------------------->|
+ Workload Identity                         Authorization   Resource
+     Provider       Agent                   Server (AS)   Server (RS)
+         |            |                          |             |
+(1)  [administrator registers the Workload Identity Provider]  |
+         |            |                          |             |
+(2)  [Platform creates Agent; nothing sent to AS or RS]        |
+         |            |                          |             |
+(3)      |--- WAG --->|                          |             |
+         |            |--- POST /token --------->|             |
+         |            |    grant_type=jwt-bearer |             |
+         |            |    assertion=<WAG>       |             |
+         |            |    resource=<RS>         |             |
+         |            |<-- access token ---------|             |
+         |            |--- request + access token ------------>|
 ~~~
 {: #fig-overview title="One-time Workload Identity Provider registration, then per-request grants"}
 
