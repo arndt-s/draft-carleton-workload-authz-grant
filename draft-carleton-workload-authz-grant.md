@@ -215,7 +215,7 @@ The following is a non-normative example of a JWT header and claims set, as the 
 {
   "iss": "https://acme.agents.platform.example",
   "sub": "agent/7f3d9as3",
-  "nickname": "Database alert triage",
+  "nickname": "Database Migration helper",
   "roles": ["databases-team"],
   "aud": "https://as.saas.example",
   "exp": 1785271980,
@@ -250,7 +250,7 @@ This example is non-normative.  It illustrates one shape the permission decision
 * Each Authorization Server has its own concept of groups, roles, and permissions, and its administrator configures what access to grant based on a `roles` claim containing `databases-team`.
 * At a ticket tracker, the role is mapped to less than the team itself has: reading tickets, and writing comments on them, in projects associated with the team.
 * At a log service, the role is mapped to exactly the access the team has.
-* A member of the team creates an Agent with a nickname "Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token carrying the permissions mapped there, without further registration.
+* A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token carrying the permissions mapped there, without further registration.
 * A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token carrying the mapped permissions without further registration.
 
 For this example the `roles`, `groups` and `entitlements` claim names were taken from {{RFC9068, Section 2.2.3.1}}, which take them from the SCIM core schema ({{RFC7643, Section 4.1.2}}), however the claim names are used for illustrative purposes only. Inclusion of those claims is optional and Workload Identity Providers may define specific claims, depending on their deployment, supported access control models and ecosystem.
