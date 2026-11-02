@@ -203,24 +203,25 @@ The JWT Claims Set contains:
 The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent.
 See {{as-metadata}} for details on how an Authorization Server advertises support for this grant.
 
-The following is a non-normative example of a JWT header and claims set:
+The following is a non-normative example of a JWT header and claims set, as the Agent in {{permissions-example}} would present it to the ticket tracker:
 
 ~~~
 {
   "typ": "oauth-wag+jwt",
   "alg": "ES256",
-  "kid": "Oct 21"
+  "kid": "key-2026-10"
 }
 .
 {
   "iss": "https://acme.agents.platform.example",
   "sub": "agent/7f3d9as3",
-  "nickname": "Invoice triage",
+  "nickname": "Database alert triage",
+  "roles": ["databases-team"],
   "aud": "https://as.saas.example",
   "exp": 1785271980,
   "iat": 1785271680,
   "jti": "7d0f5a2b-93c8-4f0e-9c33-1b6a0e6d5f10",
-  "scope": "issues:read issues:write"
+  "scope": "tickets:read comments:write"
 }
 ~~~
 
