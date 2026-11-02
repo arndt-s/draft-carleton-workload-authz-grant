@@ -391,7 +391,7 @@ Table of Contents
       such as "roles": ["databases-team"] in its assertions.
 
    *  An administrator configures the Platform so that members of the
-      databases team can create Agents that carry that role.
+      databases team can create Agents that have that role.
 
    *  Each Authorization Server has its own concept of groups, roles,
       and permissions, and its administrator configures what access to
@@ -406,12 +406,12 @@ Table of Contents
 
    *  A member of the team creates an Agent with a nickname "Database
       Migration helper".  On its first assertion at either Authorization
-      Server, the Agent receives an access token carrying the
-      permissions mapped there, without further registration.
+      Server, the Agent receives an access token with the permissions
+      mapped there, without further registration.
 
    *  A different member of the team creates an Agent with a nickname
       "Latency optimizer".  On its first assertion it also receives an
-      access token carrying the mapped permissions without further
+      access token with the mapped permissions without further
       registration.
 
    The claim names are used for illustrative purposes only.  Inclusion

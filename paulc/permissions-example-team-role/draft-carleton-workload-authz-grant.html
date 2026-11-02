@@ -1485,7 +1485,7 @@ See <a href="#as-metadata" class="auto internal xref">Section 8</a> for details 
               <p id="section-6.2.1-2.1.1">The Workload Identity Provider is configured to include a claim such as <code>"roles": ["databases-team"]</code> in its assertions.<a href="#section-6.2.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.1-2.2">
-              <p id="section-6.2.1-2.2.1">An administrator configures the Platform so that members of the databases team can create Agents that carry that role.<a href="#section-6.2.1-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.1-2.2.1">An administrator configures the Platform so that members of the databases team can create Agents that have that role.<a href="#section-6.2.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.1-2.3">
               <p id="section-6.2.1-2.3.1">Each Authorization Server has its own concept of groups, roles, and permissions, and its administrator configures what access to grant based on a <code>roles</code> claim containing <code>databases-team</code>.<a href="#section-6.2.1-2.3.1" class="pilcrow">¶</a></p>
@@ -1497,10 +1497,10 @@ See <a href="#as-metadata" class="auto internal xref">Section 8</a> for details 
               <p id="section-6.2.1-2.5.1">At a log service, the role is mapped to exactly the access the team has.<a href="#section-6.2.1-2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.1-2.6">
-              <p id="section-6.2.1-2.6.1">A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token carrying the permissions mapped there, without further registration.<a href="#section-6.2.1-2.6.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.1-2.6.1">A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token with the permissions mapped there, without further registration.<a href="#section-6.2.1-2.6.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.1-2.7">
-              <p id="section-6.2.1-2.7.1">A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token carrying the mapped permissions without further registration.<a href="#section-6.2.1-2.7.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.1-2.7.1">A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token with the mapped permissions without further registration.<a href="#section-6.2.1-2.7.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-6.2.1-3">The claim names are used for illustrative purposes only. Inclusion of such claims is optional, and Workload Identity Providers may define specific claims depending on their deployment, supported access control models and ecosystem.<a href="#section-6.2.1-3" class="pilcrow">¶</a></p>
