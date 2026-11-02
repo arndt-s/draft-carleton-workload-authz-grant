@@ -244,12 +244,12 @@ The specific claims a Workload Identity Provider provides, and what permissions 
 This example is non-normative.  It illustrates one shape the permission decision can take.
 
 * The Workload Identity Provider is configured to include a claim such as `"roles": ["databases-team"]` in its assertions.
-* An administrator configures the Platform so that members of the databases team can create Agents that carry that role.
+* An administrator configures the Platform so that members of the databases team can create Agents that have that role.
 * Each Authorization Server has its own concept of groups, roles, and permissions, and its administrator configures what access to grant based on a `roles` claim containing `databases-team`.
 * At a ticket tracker, the role is mapped to less than the team itself has: reading tickets, and writing comments on them, in projects associated with the team.
 * At a log service, the role is mapped to exactly the access the team has.
-* A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token carrying the permissions mapped there, without further registration.
-* A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token carrying the mapped permissions without further registration.
+* A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token with the permissions mapped there, without further registration.
+* A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token with the mapped permissions without further registration.
 
 The claim names are used for illustrative purposes only. Inclusion of such claims is optional, and Workload Identity Providers may define specific claims depending on their deployment, supported access control models and ecosystem.
 
