@@ -201,26 +201,27 @@ The JWT Claims Set contains:
 The assertion is signed under a key configured from the Workload Identity Provider (see {{issuer-keys}}) and MAY carry further claims about the Agent.
 See {{as-metadata}} for details on how an Authorization Server advertises support for this grant.
 
-The following is a non-normative example of a JWT header and claims set:
+The following is a non-normative example of a JWT header and claims set, as the Agent in {{permissions-example}} would present it to the ticket tracker:
 
-```
+~~~
 {
   "typ": "oauth-wag+jwt",
   "alg": "ES256",
-  "kid": "Oct 21"
+  "kid": "key-2026-10"
 }
 .
 {
   "iss": "https://acme.agents.platform.example",
   "sub": "agent/7f3d9as3",
-  "nickname": "Invoice triage",
+  "nickname": "Database Migration helper",
+  "roles": ["databases-team"],
   "aud": "https://as.saas.example",
   "exp": 1785271980,
   "iat": 1785271680,
   "jti": "7d0f5a2b-93c8-4f0e-9c33-1b6a0e6d5f10",
-  "scope": "issues:read issues:write"
+  "scope": "tickets:read comments:write"
 }
-```
+~~~
 
 # Workload Identity Provider Registration {#provider-registration}
 
@@ -237,6 +238,20 @@ On each assertion the Authorization Server finds the Workload Identity Provider 
 During Workload Identity Provider registration, the Authorization Server sets local policy for what permissions to assign an access token given in return for a WAG.  This policy MAY involve consulting claims, other than `nickname`, that the Workload Identity Provider asserts about the Agent in the WAG. A claim is an assertion by the Workload Identity Provider, meaningful only within the context of that Workload Identity Provider, and an Authorization Server MUST NOT assume that a similarly named value from another Workload Identity Provider means the same thing.
 
 The specific claims a Workload Identity Provider provides, and what permissions an Authorization Server decides to grant are outside the scope of this document.
+
+### Permissions Example {#permissions-example}
+
+This example is non-normative.  It illustrates one shape the permission decision can take.
+
+* The Workload Identity Provider is configured to include a claim such as `"roles": ["databases-team"]` in its assertions.
+* An administrator configures the Platform so that members of the databases team can create Agents that have that role.
+* Each Authorization Server has its own concept of groups, roles, and permissions, and its administrator configures what access to grant based on a `roles` claim containing `databases-team`.
+* At a ticket tracker, the role is mapped to less than the team itself has: reading tickets, and writing comments on them, in projects associated with the team.
+* At a log service, the role is mapped to exactly the access the team has.
+* A member of the team creates an Agent with a nickname "Database Migration helper".  On its first assertion at either Authorization Server, the Agent receives an access token with the permissions mapped there, without further registration.
+* A different member of the team creates an Agent with a nickname "Latency optimizer". On its first assertion it also receives an access token with the mapped permissions without further registration.
+
+The claim names are used for illustrative purposes only. Inclusion of such claims is optional, and Workload Identity Providers may define specific claims depending on their deployment, supported access control models and ecosystem.
 
 ## Multi-Tenancy {#tenants}
 
