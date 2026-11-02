@@ -142,20 +142,20 @@ Authorization Server, Resource Server: as in {{RFC6749}}. Where an Authorization
    and issues an access token under its own policy ({{properties}}).
 
 ~~~
-      Platform                    Authorization               Resource
-      (Workload Identity          Server (AS)                 Server (RS)
-       Provider; Agents)
-            |                          |                          |
-  (1)  [administrator registers the Workload Identity Provider]   |
-            |                          |                          |
-  (2)  [Platform creates Agent; nothing sent to AS or RS]         |
-            |                          |                          |
-  (3)       |--- POST /token --------->|                          |
-            |    grant_type=jwt-bearer |                          |
-            |    assertion=<WAG>       |                          |
-            |    resource=<RS>         |                          |
-            |<-- access token ---------|                          |
-            |--- request + access token ------------------------->|
+ Workload Identity                         Authorization   Resource
+     Provider       Agent                   Server (AS)   Server (RS)
+         |            |                          |             |
+(1)  [administrator registers the Workload Identity Provider]  |
+         |            |                          |             |
+(2)  [Platform creates Agent; nothing sent to AS or RS]        |
+         |            |                          |             |
+(3)      |--- WAG --->|                          |             |
+         |            |--- POST /token --------->|             |
+         |            |    grant_type=jwt-bearer |             |
+         |            |    assertion=<WAG>       |             |
+         |            |    resource=<RS>         |             |
+         |            |<-- access token ---------|             |
+         |            |--- request + access token ------------>|
 ~~~
 {: #fig-overview title="One-time Workload Identity Provider registration, then per-request grants"}
 
