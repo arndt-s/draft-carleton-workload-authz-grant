@@ -203,7 +203,7 @@ See {{as-metadata}} for details on how an Authorization Server advertises suppor
 
 The following is a non-normative example of a JWT header and claims set:
 
-```
+~~~
 {
   "typ": "oauth-wag+jwt",
   "alg": "ES256",
@@ -220,7 +220,7 @@ The following is a non-normative example of a JWT header and claims set:
   "jti": "7d0f5a2b-93c8-4f0e-9c33-1b6a0e6d5f10",
   "scope": "issues:read issues:write"
 }
-```
+~~~
 
 # Workload Identity Provider Registration {#provider-registration}
 
