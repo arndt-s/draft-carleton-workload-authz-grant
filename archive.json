@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-01T05:02:00.345236+00:00",
+  "timestamp": "2026-11-03T05:51:01.452472+00:00",
   "repo": "pcarleton/draft-carleton-workload-authz-grant",
   "labels": [
     {
@@ -461,7 +461,7 @@
       "labels": [],
       "body": "Nick Steele (OpenAI), Aaron Parecki (Okta), Arndt Schwenkschuster (Defakto Security) and Brian Campbell (Ping Identity) join as editors, with Paul Carleton marked as editor. Acknowledgments updated to thank Pieter Kasselman and Karl McGuinness. CONTRIBUTING gains a short section on the working convention (issues in, editors write normative text, outside PRs to normative text reviewed as input). Decision log D14.",
       "createdAt": "2026-09-01T13:47:08Z",
-      "updatedAt": "2026-09-01T13:47:16Z",
+      "updatedAt": "2026-11-02T14:56:39Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "a5ff3aaefe2dc75d3e24244fd30104ed58f26cce",
@@ -489,7 +489,7 @@
       "labels": [],
       "body": "Closes #1.\r\n\r\nthe draft called itself a profile of draft-klrc-aiagent-auth (AIMS) but never\r\nactually depended on it: every rule is stated in terms of RFC 7523, RFC\r\n8414 metadata and published JWK Sets. This drops the profile framing so\r\nan AS implementer can read this document alone.\r\n\r\n- AIMS moves from normative to informative references; \"profile\" is\r\n  removed throughout.\r\n- \"Relationship to AIMS\" becomes an informative correspondence table\r\n  (agent acting on its own behalf, AIMS 10.4.2) instead of inherited\r\n  requirements.\r\n- New Concepts > Overview: the parties, the three steps (trust\r\n  establishment once, instantiation, per-request grant) and an\r\n  end-to-end figure, so the document stands on its own.\r\n- Abstract/Introduction wording: no administrator-performed\r\n  per-workload registration step; drop the \"self-contained\" and \"no\r\n  per-workload credential\" claims (the grant is per workload; we build\r\n  on RFC 7523).\r\n- Agent Identity Model: single-agent policy is an exact match on the\r\n  sub value.\r\n- Section anchors added ({#introduction}, {#conventions}, {#overview},\r\n  {#aims}); decision log D13.\r\n\r\nNo change to the grant format, claims, or AS processing rules.",
       "createdAt": "2026-09-03T14:21:17Z",
-      "updatedAt": "2026-09-03T14:22:27Z",
+      "updatedAt": "2026-11-02T14:56:40Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "210b15d16b028b27d5fc6a2c0e9096ee679ff370",
@@ -517,7 +517,7 @@
       "labels": [],
       "body": "\r\nthis is combination of:\r\n* clarifying the constraints around the agent identifier\r\n* swapping from \"allowlist entry\" to \"tenancy registration\"\r\n* rewriting the Trust section to make more sense \r\n\r\nstill todo:\r\n* allow for `tenant` claim",
       "createdAt": "2026-09-04T14:29:18Z",
-      "updatedAt": "2026-09-10T18:18:17Z",
+      "updatedAt": "2026-11-02T14:56:31Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "2c5222b411c6ff73bed92ec94622d0b2c8717bce",
@@ -619,7 +619,7 @@
       "labels": [],
       "body": "Proposed -01 text, cut down to be only what's required for interop.\r\n\r\n**Changed**\r\n\r\n- `aud` is the authorization server's issuer identifier, a single value\r\n- The Agent Identifier is an opaque string\r\n- JWK can be manually entered\r\n- \"Platform\" is one tenant; \"Platform registration\" is the authorization server's record of one trusted Platform. Under a shared issuer identifier the registration needs a claim that tells Platforms apart (`tenant` RECOMMENDED for new shared issuers). (Relates to #7)\r\n\r\n**Small normative additions**\r\n\r\n- `resource` REQUIRED\r\n- optional `scope` claim as in ID-JAG\r\n- no refresh tokens\r\n- first-seen stated as \"MUST NOT reject solely because the `sub` is unseen\"\r\n- error responses say who must act, using existing error codes;\r\n\r\n**Cut**\r\n\r\n- AIMS correspondence table (the Overview and figure stay, shortened)\r\n- Scope section (now in the abstract)\r\n- retirement prose (now the lifetime rule)\r\n- the property vocabulary (points at the `roles`/`groups`/`entitlements` names already in use, defines none). Unused references removed.\r\n\r\n**Added**\r\nSecurity Considerations is a list for now; a fuller treatment is coming separately.\r\n",
       "createdAt": "2026-09-10T18:11:00Z",
-      "updatedAt": "2026-09-22T17:10:13Z",
+      "updatedAt": "2026-11-02T14:56:46Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "2c5222b411c6ff73bed92ec94622d0b2c8717bce",
@@ -1688,7 +1688,7 @@
       "labels": [],
       "body": "Follow-up to #12, which deferred both of these.\n\n- Defines Platform and Workload Identity Provider separately, starting from the wording in https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/12#discussion_r4061555334. The second commit renames the term from WAGI to Workload Identity Provider and applies it through the draft (registration, keys, claims, tenancy, errors, security considerations, overview figure). Platform now only means the party that creates and hosts Agents.\n- Restores the permissions example as a bulleted list, with the two references it cites (RFC 9068, RFC 7643).\n\nTo drop the rename and keep the WAGI wording, revert the last commit.",
       "createdAt": "2026-09-22T17:15:07Z",
-      "updatedAt": "2026-09-22T17:33:27Z",
+      "updatedAt": "2026-11-02T14:56:34Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "5569960c75457fef08d35f39e84f31d9ff3d031e",
@@ -1722,7 +1722,7 @@
       "labels": [],
       "body": "Follow-up to #12, which deferred this.\n\nDefines Platform and Workload Identity Provider separately, starting from the wording in https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/12#discussion_r4061555334. The second commit renames the term from WAGI to Workload Identity Provider and applies it through the draft (registration, keys, claims, tenancy, errors, security considerations, overview figure). Platform now only means the party that creates and hosts Agents.\n\nTo keep the WAGI wording instead, revert the last commit.",
       "createdAt": "2026-09-22T17:25:35Z",
-      "updatedAt": "2026-10-13T10:43:57Z",
+      "updatedAt": "2026-11-02T14:56:22Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "5569960c75457fef08d35f39e84f31d9ff3d031e",
@@ -1852,7 +1852,7 @@
       "labels": [],
       "body": "Addresses two of the three idnits findings on the -01 submission.\n\n- `SUBMISSION_TYPE_UNEXPECTED`: removes `submissiontype: IETF` from the front matter. That key is the only thing that puts a `submissionType` attribute on the `rfc` element, and the datatracker has no stream for this individual draft.\n- `REFERENCE_NOT_USED`: removes RFC 8628 from the informative references. The text never cites it.\n\nNot fixed: `LINE_PI`. The `<?line N?>` processing instructions are emitted by kramdown-rfc itself (one per `---` section, plus one after the BCP 14 boilerplate) and there is no option to suppress them, so it would affect any draft built this way. It is a warning only.\n\nNot verified locally: the fixes were reasoned from the submitted XML and the kramdown-rfc and xml2rfc sources, and I could not run a build here. The next submission's idnits result will confirm.",
       "createdAt": "2026-09-22T17:37:41Z",
-      "updatedAt": "2026-09-29T14:35:24Z",
+      "updatedAt": "2026-11-02T14:56:18Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "5569960c75457fef08d35f39e84f31d9ff3d031e",
@@ -1962,7 +1962,7 @@
       "labels": [],
       "body": "One line in JWT Syntax, one security consideration saying it is never an authorization input or an identifier, a matching clause in Permissions. See issue #2.",
       "createdAt": "2026-10-23T14:18:22Z",
-      "updatedAt": "2026-10-23T15:55:24Z",
+      "updatedAt": "2026-11-02T14:56:16Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "5c5e31b6ad4c7db4696056fda3388ce170cb8748",
@@ -2004,24 +2004,26 @@
       "id": "PR_kwDOTlTgBM8AAAABKvrvdA",
       "title": "Support AS metadata advertisement",
       "url": "https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/23",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Add grant-profile URN for WAG and talk about its usage.",
       "createdAt": "2026-10-26T10:40:41Z",
-      "updatedAt": "2026-10-30T21:39:22Z",
+      "updatedAt": "2026-11-02T14:50:19Z",
       "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
       "baseRefName": "main",
       "baseRefOid": "493e045a666d3b4bb18b8fa3c772087400729cc7",
       "headRepository": "arndt-s/draft-carleton-workload-authz-grant",
       "headRefName": "arndt/advertised-support",
       "headRefOid": "8a598d76722b4d4c6a2a8a02bc939f8527add20d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-11-02T14:50:19Z",
+      "mergedAt": "2026-11-02T14:50:19Z",
+      "mergedBy": "pcarleton",
+      "mergeCommit": {
+        "oid": "2c729c6a905ee7acf9a2befb54fb043ff1533266"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2237,6 +2239,136 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOTlTgBM8AAAABMVTzMg",
+      "title": "fix sequence diagram for separate agent and workload idp",
+      "url": "https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/25",
+      "state": "MERGED",
+      "author": "pcarleton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Follow up to https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/15 where we wanted to clean-up the sequence diagram.",
+      "createdAt": "2026-11-02T15:13:28Z",
+      "updatedAt": "2026-11-02T15:17:25Z",
+      "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
+      "baseRefName": "main",
+      "baseRefOid": "2c729c6a905ee7acf9a2befb54fb043ff1533266",
+      "headRepository": "pcarleton/draft-carleton-workload-authz-grant",
+      "headRefName": "paulc/sequence-diagram",
+      "headRefOid": "78b73fc3da9faabdda15ec2d8bb7f07adb035ee5",
+      "closedAt": "2026-11-02T15:17:25Z",
+      "mergedAt": "2026-11-02T15:17:25Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "901de3625e404d15cd5ef2cff10f61abd72b712d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOTlTgBM8AAAABMWJNkw",
+      "title": "More explicit example of using claims for permissions",
+      "url": "https://github.com/pcarleton/draft-carleton-workload-authz-grant/pull/26",
+      "state": "MERGED",
+      "author": "pcarleton",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-11-02T16:12:40Z",
+      "updatedAt": "2026-11-02T18:33:55Z",
+      "baseRepository": "pcarleton/draft-carleton-workload-authz-grant",
+      "baseRefName": "main",
+      "baseRefOid": "901de3625e404d15cd5ef2cff10f61abd72b712d",
+      "headRepository": "pcarleton/draft-carleton-workload-authz-grant",
+      "headRefName": "paulc/permissions-example-team-role",
+      "headRefOid": "89d216792edfc94e5efa32db3613043c3838abb1",
+      "closedAt": "2026-11-02T18:33:55Z",
+      "mergedAt": "2026-11-02T18:33:55Z",
+      "mergedBy": "pcarleton",
+      "mergeCommit": {
+        "oid": "85437ecb4fdb4af1a8558aacdcd90b41c5b8048f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVi7_hA",
+          "commit": {
+            "abbreviatedOid": "5595a1e"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-02T17:51:38Z",
+          "updatedAt": "2026-11-02T17:51:38Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "I would remove the spec archeology, especially since you only use the names, but not in the context it was originally defined. How about this:L\n\n```suggestion\nThe claim names are used for illustrative purposes only. Inclusion of such claims is optional, and Workload Identity Providers may define specific claims depending on their deployment, supported access control models and ecosystem.\n```",
+              "createdAt": "2026-11-02T17:51:38Z",
+              "updatedAt": "2026-11-02T17:51:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVi92fg",
+          "commit": {
+            "abbreviatedOid": "a497bd5"
+          },
+          "author": "pcarleton",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-02T17:54:13Z",
+          "updatedAt": "2026-11-02T17:54:14Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\n```",
+              "createdAt": "2026-11-02T17:54:14Z",
+              "updatedAt": "2026-11-02T17:54:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVi98sw",
+          "commit": {
+            "abbreviatedOid": "a497bd5"
+          },
+          "author": "pcarleton",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-02T17:54:21Z",
+          "updatedAt": "2026-11-02T17:54:21Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\n```",
+              "createdAt": "2026-11-02T17:54:21Z",
+              "updatedAt": "2026-11-02T17:54:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOTlTgBM8AAAABVjcrBw",
+          "commit": {
+            "abbreviatedOid": "89d2167"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-11-02T18:31:12Z",
+          "updatedAt": "2026-11-02T18:31:12Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
