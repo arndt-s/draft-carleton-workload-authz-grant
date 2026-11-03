@@ -5,6 +5,34 @@ Most recent first within each state. Open items are at the bottom.
 
 ## Decided
 
+### D18 — WAG→WAG exchange via RFC 8693 at the target issuer (2026-11-03)
+An Agent holding a WAG from one WIdP obtains a WAG from another WIdP (the
+target issuer, which the downstream AS trusts) by RFC 8693 token exchange at
+the target issuer: `subject_token_type` and `requested_token_type` are
+`urn:ietf:params:oauth:token-type:wag`; `audience` (the downstream AS issuer
+identifier) and `resource` (the RS the Agent wants) are both REQUIRED; the
+response carries `issued_token_type=...:wag` and `token_type=N_A`. The target
+issuer validates the `subject_token` exactly as an AS validates a WAG, under
+a WIdP registration for the upstream WIdP, so no new validation rules are
+needed. The issued WAG is re-issued by the target issuer: `sub` and claims
+MAY change, `exp` SHOULD NOT exceed the `subject_token`'s (keeps the D10
+residual-access bound across hops), and it carries a REQUIRED `resource`
+claim that the downstream AS enforces against the `resource` parameter
+(`resource` is added to the WAG claims as OPTIONAL in general). Provenance
+of the upstream (iss, sub) MAY be carried but no claim is defined and it
+MUST NOT identify the Agent. The Agent treats the issued WAG as opaque.
+Rationale: mirrors ID-JAG's token exchange step (a grant for a downstream AS
+obtained by exchange), with a WAG instead of an ID Token as input; binding
+`resource` limits a leaked exchanged WAG to one AS and one resource. This
+does not reopen D3: D3 rejected token exchange for the WAG→AS hop because
+deployed ASes lack it; this hop is at a WIdP. RFC 8693 moves to normative.
+Alternatives: jwt-bearer at the target issuer returning a WAG (rejected:
+overloads the access-token response with no type signal); a mandatory `act`
+chain (rejected for now: new claim semantics, downstream trusts only the
+target issuer; left as an open issue); `resource` as a request-only
+parameter (rejected: the issued WAG would be usable for any resource at the
+AS).
+
 ### D17 — AS advertises WAG support via `authorization_grant_profiles_supported` (2026-10-26)
 An Authorization Server that publishes RFC 8414 metadata SHOULD list
 `urn:ietf:params:oauth:grant-profile:wag` in
